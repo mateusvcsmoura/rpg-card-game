@@ -1,0 +1,46 @@
+public class RpgCardGame {
+
+    public static void main(String[] args) {
+        // Warrior > Mago
+        // Mago > Rogue
+        // Rogue > Warrior
+
+        Mage mats = new Mage("mats");
+        Rogue itzy = new Rogue("itzy");
+        Warrior garen = new Warrior("garen");
+
+        mats.showCharacterStatus();
+        itzy.showCharacterStatus();
+        garen.showCharacterStatus();
+
+        // itzy.attack(mats);
+        // mats.attack(itzy);
+
+        // itzy.attack(garen);
+        // garen.attack(itzy);
+        // itzy.attack(garen);
+        // garen.attack(itzy);
+
+        // mats.attack(garen);
+        // garen.attack(mats);
+        // mats.attack(garen);
+        // garen.attack(mats);
+        // mats.attack(garen);
+        // garen.attack(mats);
+
+        // itzy.setDefenseStance(true);
+        // mats.attack(itzy);
+        // mats.attack(itzy);
+        // itzy.setDefenseStance(false);
+        // mats.attack(itzy);
+        // mats.attack(itzy);
+        // mats.attack(itzy);
+
+        // itzy.walk();
+
+
+        mats.showCharacterStatus();
+        itzy.showCharacterStatus();
+        garen.showCharacterStatus();
+    }
+}
