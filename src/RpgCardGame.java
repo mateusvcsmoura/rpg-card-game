@@ -15,6 +15,10 @@ public class RpgCardGame {
 
         // itzy.attack(mats);
         // mats.attack(itzy);
+        // garen.attack(mats);
+        // itzy.attack(garen);
+        // mats.attack(garen);
+        // garen.attack(itzy);
 
         // itzy.attack(garen);
         // garen.attack(itzy);

@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Character {
     private String name;
     private final String cardValue;
@@ -8,6 +10,7 @@ public class Character {
     private int weariness;
     private boolean defenseStance;
     private boolean isAlive;
+    private double baseAttackFailRate;
 
     public Character (String name, int power, int lifePoints, int defensePoints, String rpgClass) {
         this.name = name;
@@ -20,6 +23,7 @@ public class Character {
         this.weariness = 0;
         this.defenseStance = false;
         this.isAlive = true;
+        this.baseAttackFailRate = 0.15;
     }
 
     public void showCharacterStatus() {
@@ -49,7 +53,7 @@ public class Character {
         boolean isTargetAlive = target.getIsAlive();
 
         if (!isAttackerHealthy) {
-            System.out.println(this.getName() + " is not healthy enough to do any action. Check Character Life or Weariness");
+            System.out.println(this.getName() + " is not healthy enough to do any action. Check Character Life or Weariness.");
             return;
         }
 
@@ -58,38 +62,40 @@ public class Character {
             return;
         }
 
+        double damageMultiplier = 1.0;
+        double currentFailRate = this.getBaseAttackFailRate();
+
+        AttackModifier modifier = GameRules.getModifier(this.getRpgClass(), target.getRpgClass());
+
+        if (modifier != null) {
+            System.out.println("Counter class detected! " + this.getRpgClass() + " vs " + target.getRpgClass());
+            damageMultiplier = modifier.damageMultiplier();
+            currentFailRate = modifier.failRate();
+        }
+
+        if (Math.random() < currentFailRate) {
+            System.out.println(this.getName() + " tried to attack but got bad luck (RNG)!");
+            return;
+        }
+
         if (target.getDefensePoints() >= this.getPower()) {
             System.out.println(this.getName() + " tried attacking " + target.getName() + " but failed!\n");
             return;
         }
 
-        int damage = this.getPower() - target.getDefensePoints();
+        int baseDamage = this.getPower() - target.getDefensePoints();
 
         if (target.getDefenseStance()) {
-            damage = damage - 15;
+            baseDamage = baseDamage - 15;
         }
 
-        if (this.getRpgClass().equals("Rogue")) {
-            if (target.getRpgClass().equals("Warrior")) {
-                damage = (int) Math.round(damage * 2);
-            }
-        }
+        int finalDamage = (int) Math.round(baseDamage * damageMultiplier);
+        if (finalDamage <= 0) finalDamage = 1; // Garante dano mínimo
 
-        if (this.getRpgClass().equals("Mage")) {
-            if (target.getRpgClass().equals("Rogue")) {
-                damage = (int) Math.round(damage * 1.25);
-            }
-        }
 
-        if (this.getRpgClass().equals("Warrior")) {
-            if (target.getRpgClass().equals("Mage")) {
-                damage = (int) Math.round(damage * 1.8);
-            }
-        }
+        System.out.println(this.getName() + " has attacked " + target.getName() + " dealing " + finalDamage + " damage");
 
-        System.out.println(this.getName() + " has attacked " + target.getName() + " dealing " + damage + " damage");
-
-        target.updateLife(-damage);
+        target.updateLife(-finalDamage);
         this.updateWeariness(3);
     }
 
@@ -184,5 +190,13 @@ public class Character {
 
     public void setWeariness(int weariness) {
         this.weariness = weariness;
+    }
+
+    public double getBaseAttackFailRate() {
+        return this.baseAttackFailRate;
+    }
+
+    public void setBaseAttackFailRate(double newRate) {
+        this.baseAttackFailRate = newRate;
     }
 }
