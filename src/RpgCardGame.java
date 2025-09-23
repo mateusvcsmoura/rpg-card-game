@@ -1,17 +1,25 @@
+import java.util.List;
+
 public class RpgCardGame {
 
     public static void main(String[] args) {
+        Player mateus = new Player("mats");
+        for (int i = 0; i < 5; i++) {
+            List<Character> cards = mateus.getCards();
+            cards.get(i).showCharacterStatus();
+        }
+
         // Warrior > Mago
         // Mago > Rogue
         // Rogue > Warrior
 
-        Mage mats = new Mage("mats");
-        Rogue itzy = new Rogue("itzy");
-        Warrior garen = new Warrior("garen");
-
-        mats.showCharacterStatus();
-        itzy.showCharacterStatus();
-        garen.showCharacterStatus();
+//        Mage mats = new Mage("mats");
+//        Rogue itzy = new Rogue("itzy");
+//        Warrior garen = new Warrior("garen");
+//
+//        mats.showCharacterStatus();
+//        itzy.showCharacterStatus();
+//        garen.showCharacterStatus();
 
         // itzy.attack(mats);
         // mats.attack(itzy);
@@ -43,8 +51,8 @@ public class RpgCardGame {
         // itzy.walk();
 
 
-        mats.showCharacterStatus();
-        itzy.showCharacterStatus();
-        garen.showCharacterStatus();
+//        mats.showCharacterStatus();
+//        itzy.showCharacterStatus();
+//        garen.showCharacterStatus();
     }
 }

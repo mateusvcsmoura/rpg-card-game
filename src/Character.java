@@ -1,8 +1,5 @@
-import java.util.Random;
-
 public class Character {
     private String name;
-    private final String cardValue;
     private final String rpgClass;
     private int power;
     private int lifePoints;
@@ -14,7 +11,6 @@ public class Character {
 
     public Character (String name, int power, int lifePoints, int defensePoints, String rpgClass) {
         this.name = name;
-        this.cardValue = "1C";
         this.rpgClass = rpgClass;
         this.power = power;
         this.lifePoints = lifePoints;
@@ -28,7 +24,6 @@ public class Character {
 
     public void showCharacterStatus() {
         System.out.println("\nCharacter: " + this.getName());
-        System.out.println("Card Value: " + this.getCardValue());
         System.out.println("RPG Class: " + this.getRpgClass());
         System.out.println("Power: " + this.getPower());
         System.out.println("Life Points: " + this.getLifePoints());
@@ -138,10 +133,6 @@ public class Character {
 
     public String getName() {
         return this.name;
-    }
-
-    public String getCardValue() {
-        return this.cardValue;
     }
 
     public String getRpgClass() {
