@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class Player {
-    private String name;
+    private final String name;
     private List<Character> cards;
 
     public Player (String name) {
@@ -11,5 +11,9 @@ public class Player {
 
     public List<Character> getCards () {
         return this.cards;
+    }
+
+    public String getName () {
+        return this.name;
     }
 }

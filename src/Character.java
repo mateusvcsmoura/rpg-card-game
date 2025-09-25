@@ -4,7 +4,6 @@ public class Character {
     private int power;
     private int lifePoints;
     private int defensePoints;
-    private int weariness;
     private boolean defenseStance;
     private boolean isAlive;
     private double baseAttackFailRate;
@@ -16,7 +15,6 @@ public class Character {
         this.lifePoints = lifePoints;
         this.defensePoints = defensePoints;
 
-        this.weariness = 0;
         this.defenseStance = false;
         this.isAlive = true;
         this.baseAttackFailRate = 0.15;
@@ -28,7 +26,6 @@ public class Character {
         System.out.println("Power: " + this.getPower());
         System.out.println("Life Points: " + this.getLifePoints());
         System.out.println("Defense Points: " + this.getDefensePoints());
-        System.out.println("Weariness: " + this.getWeariness() + "\n");
     }
 
     public void attack (Character target) { // char power -> target defense
@@ -36,7 +33,7 @@ public class Character {
         boolean isTargetAlive = target.getIsAlive();
 
         if (!isAttackerHealthy) {
-            System.out.println(this.getName() + " is not healthy enough to do any action. Check Character Life or Weariness.");
+            System.out.println(this.getName() + " is not healthy enough to do any action.");
             return;
         }
 
@@ -79,7 +76,17 @@ public class Character {
         System.out.println(this.getName() + " has attacked " + target.getName() + " dealing " + finalDamage + " damage");
 
         target.updateLife(-finalDamage);
-        this.updateWeariness(3);
+    }
+
+    public void defend () {
+        boolean isCharacterHealthy = this.checkCharacterHealth();
+        if (!isCharacterHealthy) {
+            System.out.println(this.getName() + " is too tired to defend.");
+            return;
+        }
+
+        System.out.println(this.getName() + " is taking a defensive stance!");
+        this.setDefenseStance(true);
     }
 
     private void updateLife (int amount) {
@@ -93,11 +100,8 @@ public class Character {
         this.setLifePoints(updatedLife);
     }
 
-    private void updateWeariness (int amount) {
-        this.setWeariness(this.getWeariness() + amount);
-    }
     private boolean checkCharacterHealth () {
-        return this.getWeariness() < 15 && this.getIsAlive();
+        return this.getIsAlive();
     }
 
     private void die () {
@@ -143,14 +147,6 @@ public class Character {
 
     public int getDefensePoints() {
         return this.defensePoints;
-    }
-
-    public int getWeariness() {
-        return this.weariness;
-    }
-
-    public void setWeariness(int weariness) {
-        this.weariness = weariness;
     }
 
     public double getBaseAttackFailRate() {
